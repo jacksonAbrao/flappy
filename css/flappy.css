@@ -11,19 +11,26 @@
 * {
     font-family: 'Oswald', sans-serif;
     box-sizing: border-box;
+    margin: 0;
+    padding: 0;
 }
-
-.buttons {
+.conteudo-init {
     display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    height: 100%;
 }
 
-.buttons button {
+.play {
     width: 50px;
     height: 50px;
     margin: 10px;
     border-radius: 100%;
     background-color: #fff;
-    border: 1px solid #000;
+    border: 1px solid #fff;
+    color: deepskyblue;
     display: flex;
     align-content: center;
     justify-content: center;
@@ -38,12 +45,25 @@
     background-color: #0D262D;
 }
 
+.titulo {
+    font-size: 50px;
+    margin: 0;
+}
+
+.informacoes {
+    font-size: 30px;
+    margin-bottom: 0px;
+}
+
+.informacoes i { 
+    margin-left: 20px;
+}
+
 [cp-flappy] {
     position: relative;
     border: 5px solid dodgerblue;
-    width: 80vw;
+    width: 100vw;
     height: 60vh;
-    margin: 15px;
     background-color: deepskyblue;
     overflow: hidden;
 }
@@ -92,4 +112,33 @@
     font-size: 70px;
     z-index: 100;
     color: white;
+}
+
+/* menságem de game over */
+.game-over {
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    background-color: #0D262D80;
+}
+
+.game-over .game-over-title {
+    font-size: 50px;
+    margin-bottom: 10px;
+}
+
+.game-over .points-text {
+    font-size: 20px;
+}
+
+.game-over .points-text span {
+    font-size: 25px;
+}
+
+.game-over .game-over-text {
+    font-size: 30px;
 }

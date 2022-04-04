@@ -1,6 +1,7 @@
-function novoElemento(tagName, className) {
+function novoElemento(tagName, className, content) {
     const elem = document.createElement(tagName);
     elem.className = className;
+    if (content) elem.innerHTML = content;
     return elem;
 }
 
@@ -124,24 +125,40 @@ function colidiu(passaro, barreiras) {
     return colidiu;
 }
 
+function GameOver(pontos) {
+    this.elemento = novoElemento("div", "game-over");
+    this.elemento.appendChild(novoElemento("h1", "game-over-title", "Game Over"));
+    if (pontos == 0) {
+        this.elemento.appendChild(novoElemento("div", "points-text", "Você não conseguiu nenhum ponto"));
+    } else if (pontos == 1) {
+        this.elemento.appendChild(novoElemento("div", "points-text", `Você fez <span>${pontos}</span> ponto!`));
+    } else {
+        this.elemento.appendChild(novoElemento("div", "points-text", `Você fez <span>${pontos}</span> pontos!`));
+    }
+    this.elemento.appendChild(novoElemento("div", "game-over-text", "<button class='play' onclick='play()'><i class='fas fa-redo-alt'></i></button>"));
+}
+
 function FlappyBird() {
-    let pontos = 0;
 
     const areaDoJogo = document.querySelector("[cp-flappy]");
-    const altura = areaDoJogo.clientHeight;
-    const largura = areaDoJogo.clientWidth;
-
-    const progresso = new Progresso();
-    const barreiras = new Barreiras(altura, largura, 250, 400, () => progresso.atualizarPontos(++pontos));
-    const passaro = new Passaro(altura);
-
-    areaDoJogo.appendChild(progresso.elemento);
-    areaDoJogo.appendChild(passaro.elemento);
-    barreiras.pares.forEach(par => areaDoJogo.appendChild(par.elemento));
-
+    areaDoJogo.innerHTML = "";
 
 
     this.start = () => {
+        let pontos = 0;
+
+        const areaDoJogo = document.querySelector("[cp-flappy]");
+        const altura = areaDoJogo.clientHeight;
+        const largura = areaDoJogo.clientWidth;
+
+        const progresso = new Progresso();
+        const barreiras = new Barreiras(altura, largura, 250, 400, () => progresso.atualizarPontos(++pontos));
+        const passaro = new Passaro(altura);
+
+        areaDoJogo.appendChild(progresso.elemento);
+        areaDoJogo.appendChild(passaro.elemento);
+        barreiras.pares.forEach(par => areaDoJogo.appendChild(par.elemento));
+
         const temporizador = setInterval(() => {
             barreiras.animar();
             passaro.animar();
@@ -150,28 +167,12 @@ function FlappyBird() {
                 clearInterval(temporizador);
                 const areaDoJogo = document.querySelector("[cp-flappy]");
                 areaDoJogo.innerHTML = "";
-                if (pontos > 0) {
-                    return alert("Parabéns, você fez " + pontos + " pontos");
-                } else {
-                    return alert("Game Over, você não fez nenhum ponto");
-                }
-
+                areaDoJogo.appendChild(new GameOver(pontos).elemento);
             }
         }, 20);
     };
-
-    this.reset = () => {
-        const areaDoJogo = document.querySelector("[cp-flappy]");
-        areaDoJogo.innerHTML = "";
-    };
-
-
 }
 
 function play() {
     new FlappyBird().start();
-};
-
-function reset() {
-    FlappyBird().reset();
-};
+}
