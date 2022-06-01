@@ -106,6 +106,11 @@ function Progresso() {
     this.atualizarPontos(0);
 }
 
+function Nuvem() {
+    this.elemento = novoElemento("img", "nuvem");
+    this.elemento.src = "img/nuvens.png";
+}
+
 function estaoSobrepostos(elementoA, elementoB) {
     const a = elementoA.getBoundingClientRect();
     const b = elementoB.getBoundingClientRect();
@@ -156,10 +161,12 @@ function FlappyBird() {
         const progresso = new Progresso();
         const barreiras = new Barreiras(altura, largura, 250, 400, () => progresso.atualizarPontos(++pontos));
         const passaro = new Passaro(altura);
+        const nuvem = new Nuvem();
 
         areaDoJogo.appendChild(progresso.elemento);
         areaDoJogo.appendChild(passaro.elemento);
         barreiras.pares.forEach(par => areaDoJogo.appendChild(par.elemento));
+        areaDoJogo.appendChild(nuvem.elemento);
 
         const temporizador = setInterval(() => {
             barreiras.animar();
